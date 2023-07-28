@@ -1,0 +1,478 @@
+{
+    "credits": [
+        {
+            "name": "Потребительский кредит для ф.л. на НПД (самозанятые)",
+            "url": "https://www.centrinvest.ru/for-individuals/crediting/self-employed",
+            "description": "",
+            "ndfl2": "any",
+            "client": "any",
+            "selfEmployment": true,
+            "ruralAreas": false,
+            "monthCalculusPeriod": false,
+            "med": false,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 5,
+                    "minSum": 0,
+                    "maxSum": 2147483647,
+                    "rateValue": 13.5
+                }
+            ]
+        },
+        {
+            "name": "Бизнес кредит для самозанятых",
+            "url": "https://www.centrinvest.ru/business/self-employed",
+            "description": "",
+            "ndfl2": "any",
+            "client": "any",
+            "businessSelfEmployment": true,
+            "ruralAreas": false,
+            "monthCalculusPeriod": true,
+            "med": false,
+            "rates": [
+                {
+                    "minPeriod": 12,
+                    "maxPeriod": 36,
+                    "minSum": 0,
+                    "maxSum": 2147483647,
+                    "rateValue": 11.5
+                },
+                {
+                    "minPeriod": 37,
+                    "maxPeriod": 60,
+                    "minSum": 0,
+                    "maxSum": 2147483647,
+                    "rateValue": 12
+                }
+            ]
+        },
+        {
+            "name": "Потребительский кредит до 300 тыс. руб. включительно",
+            "url": "https://www.centrinvest.ru/for-individuals/crediting/consumer-loan/credit-for-all",
+            "description": "",
+            "ndfl2": "any",
+            "client": "any",
+            "ruralAreas": false,
+            "monthCalculusPeriod": true,
+            "med": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 12,
+                    "maxPeriod": 60,
+                    "minSum": 0,
+                    "maxSum": 300000,
+                    "rateValue": 13.75
+                }
+            ]
+        },
+        {
+            "name": "Потребительский кредит свыше 300 тыс. руб.",
+            "url": "https://www.centrinvest.ru/for-individuals/crediting/consumer-loan/credit-for-all",
+            "description": "",
+            "ndfl2": "any",
+            "client": "any",
+            "ruralAreas": false,
+            "monthCalculusPeriod": true,
+            "med": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 12,
+                    "maxPeriod": 60,
+                    "minSum": 300001,
+                    "maxSum": 1000000,
+                    "rateValue": 13.25
+                }
+            ]
+        },
+        {
+            "name": "Потребительский кредит под залог недвижимости",
+            "url": "https://www.centrinvest.ru/for-individuals/crediting/consumer-loan/credit-for-all",
+            "description": "Кредит на потребительские цели в сумме свыше 1,0 млн. руб. под залог недвижимости, залоговой стоимостью не менее 130% от суммы кредита",
+            "ndfl2": "any",
+            "client": "any",
+            "ruralAreas": false,
+            "monthCalculusPeriod": true,
+            "med": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 12,
+                    "maxPeriod": 84,
+                    "minSum": 1000001,
+                    "maxSum": 2147483647,
+                    "rateValue": 13
+                }
+            ]
+        },
+        {
+            "name": "Потребительский кредит на потребительские цели",
+            "url": "https://www.centrinvest.ru/for-individuals/crediting/consumer-loan/credit-for-all",
+            "description": "Кредит на потребительские цели",
+            "ndfl2": "any",
+            "client": "any",
+            "ruralAreas": false,
+            "monthCalculusPeriod": true,
+            "med": true,
+            "smartgrant": true,
+            "onlyCredit": true,
+            "rates": [
+                {
+                    "minPeriod": 12,
+                    "maxPeriod": 60,
+                    "minSum": 10000,
+                    "maxSum": 1000000,
+                    "rateValue": 12.75
+                }
+            ]
+        }
+    ],
+    "autocredits": [
+        {
+            "name": "Автокредит до 3 млн. руб. включительно",
+            "url": "https://www.centrinvest.ru/for-individuals/crediting/car-loans",
+            "description": "",
+            "client": "any",
+            "med": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 7,
+                    "minInstalment": 10,
+                    "maxInstalment": 100,
+                    "minSum": 0,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 0,
+                    "maxCreditSum": 3000000,
+                    "rateValue": 13.75
+                }
+            ]
+        },
+        {
+            "name": "Автокредит свыше 3 млн. руб.",
+            "url": "https://www.centrinvest.ru/for-individuals/crediting/car-loans",
+            "description": "",
+            "client": "any",
+            "med": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 7,
+                    "minInstalment": 10,
+                    "maxInstalment": 100,
+                    "minSum": 3000001,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 3000001,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 13.25
+                }
+            ]
+        }
+    ],
+    "mortgages": [
+        {
+            "name": "Зелёная ипотека",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/green-mortgage",
+            "description": "",
+            "mortgageType": "green-mortgage",
+            "ratesSplit": false,
+            "med": true,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 50,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 9.5
+                },
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 30,
+                    "maxInstalment": 50,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 10.25
+                },
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 10,
+                    "maxInstalment": 30,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 10.5
+                }
+            ]
+        },
+        {
+            "name": "Ипотека 5,5 % годовых",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/mortgage-children",
+            "description": "",
+            "mortgageType": "postprav",
+            "ratesSplit": false,
+            "med": false,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 15,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 6000000,
+                    "rateValue": 5.5
+                }
+            ]
+        },
+        {
+            "name": "Ипотечный кредит (покупка и рефинансирование)",
+            "url": "https://www.centrinvest.ru/for-individuals/refinancing/mortgage-refinancing",
+            "description": "",
+            "mortgageType": "purchaseAndRefinancing",
+            "ratesSplit": false,
+            "med": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 50,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 10
+                },
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 30,
+                    "maxInstalment": 50,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 10.75
+                },
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 10,
+                    "maxInstalment": 30,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 11
+                }
+            ]
+        },
+        {
+            "name": "Ипотека 7,0 % годовых",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/new-building",
+            "description": "",
+            "mortgageType": "postprav65",
+            "ratesSplit": false,
+            "med": false,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 15,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 6000000,
+                    "rateValue": 7.0
+                }
+            ]
+        },
+        {
+            "name": "Ипотека для IT-специалистов",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/it-mortgage",
+            "description": "",
+            "mortgageType": "itmortgage",
+            "ratesSplit": false,
+            "med": false,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 15,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 18000000,
+                    "rateValue": 3.9
+                }
+            ]
+        },
+        {
+            "name": "Ипотека (строительство жилья и рефинансирование)",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/building",
+            "description": "залог недвижимости 100% и более от суммы кредита",
+            "mortgageType": "construct",
+            "ratesSplit": false,
+            "med": true,
+            "pledge": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 10,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 11.25,
+                    "pledgeRates": [10.0, 11.0]
+                }
+            ]
+        },
+        {
+            "name": "Ипотека (коммерческая недвижимость)",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/commercial-property",
+            "description": "",
+            "mortgageType": "commerce",
+            "ratesSplit": false,
+            "med": true,
+            "smartgrant": true,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 10,
+                    "minInstalment": 10,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 12
+                }
+            ]
+        },
+        {
+            "name": "Ипотека 2,75% на сельских терр. (агломерациях)",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/village",
+            "description": "",
+            "mortgageType": "village",
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 10,
+                    "maxInstalment": 100,
+                    "minSum": 0,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 0,
+                    "maxCreditSum": 6000000,
+                    "rateValue": 2.75
+                }
+            ]
+        },
+        {
+            "name": "Ипотека акция 2022",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage",
+            "description": "Приобретение недвижимости, строительство и рефинансирование ипотеки стороннего банка",
+            "mortgageType": "discount2022",
+            "ratesSplit": false,
+            "med": true,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 10,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 10.5
+                }
+            ]
+        },
+        {
+            "name": "Ипотека для работников ИТ-сферы (условия банка)",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/it-mortgage-bank",
+            "description": "",
+            "mortgageType": "itmortgage-bank",
+            "ratesSplit": false,
+            "med": false,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 10,
+                    "maxInstalment": 30,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 8.9
+                },
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 30,
+                    "maxInstalment": 50,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 7.9
+                },
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 50,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 300000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 6.9
+                }
+            ]
+        },
+        {
+            "name": "Ипотечный кредит с господдержкой под 2%",
+            "url": "https://www.centrinvest.ru/for-individuals/mortgage/mortgage-2",
+            "description": "",
+            "mortgageType": "mortgageTwoPercents",
+            "ratesSplit": false,
+            "med": false,
+            "rates": [
+                {
+                    "minPeriod": 1,
+                    "maxPeriod": 20,
+                    "minInstalment": 10,
+                    "maxInstalment": 100,
+                    "minSum": 300000,
+                    "maxSum": 2147483647,
+                    "minCreditSum": 600000,
+                    "maxCreditSum": 2147483647,
+                    "rateValue": 2
+                }
+            ]
+        }
+    ]
+}

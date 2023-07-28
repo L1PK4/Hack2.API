@@ -237,3 +237,12 @@ def edit_user(
     crud.auth_session.remove_by_id(db=db, id=session_id)
 
     return schemas.response.OkResponse()
+
+
+
+@router.get(
+    '/',
+    response_model=schemas.faculty.GettingFaculty,
+)
+def index():
+    return schemas.response.OkResponse()

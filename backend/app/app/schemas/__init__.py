@@ -5,3 +5,6 @@ from .response import Meta, OkResponse, ListOfEntityResponse, SingleEntityRespon
 from .tel_verification_code import *
 from .email_verification_code import *
 from app.utils.auth_session.schemas import CreatingAuthSession, UpdatingAuthSession, GettingAuthSession
+from .city import GettingCity, UpdatingCity, CreatingCity
+from .university import GettingUniversity, UpdatingUniversity, CreatingUniversity
+from .faculty import GettingFaculty, UpdatingFaculty, CreatingFaculty

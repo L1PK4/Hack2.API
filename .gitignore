@@ -8,3 +8,4 @@ app-db-data
 .idea
 __pycache__
 .env
+venv
