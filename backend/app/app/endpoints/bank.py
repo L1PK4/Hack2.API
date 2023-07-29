@@ -13,132 +13,139 @@ router = APIRouter()
 
 
 @router.get(
-    '/faculties/',
-    tags=["Клиентское приложение / Факультеты"],
-    name="Получить всех факультеты",
-    response_model=schemas.response.ListOfEntityResponse[schemas.faculty.GettingFaculty],
+    '/banks/',
+    tags=["Клиентское приложение / Банки"],
+    name="Получить всех банки",
+    response_model=schemas.response.ListOfEntityResponse[schemas.bank.GettingBank],
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def get_all_faculties(
+def get_all_banks(
         db: Session = Depends(deps.get_db),
         page: int | None = Query(None)
 ):
-    data, paginator = crud.crud_faculty.faculty.get_page(
+    data, paginator = crud.crud_bank.bank.get_page(
         db=db, pag=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.faculty.get_faculty(faculty=faculty)
-            for faculty in data
+            getters.bank.get_bank(bank=bank)
+            for bank in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
     )
 
 
 @router.get(
-    '/cp/faculties/',
-    tags=["Панель Управления / Факультеты"],
-    name="Получить всех факультеты",
-    response_model=schemas.response.ListOfEntityResponse[schemas.faculty.GettingFaculty],
+    '/cp/banks/',
+    tags=["Панель Управления / Банки"],
+    name="Получить всех банки",
+    response_model=schemas.response.ListOfEntityResponse[schemas.bank.GettingBank],
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def get_all_faculties(
+def get_all_banks(
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
         page: int | None = Query(None)
 ):
-    data, paginator = crud.crud_faculty.faculty.get_page(
+    data, paginator = crud.crud_bank.bank.get_page(
         db=db, pag=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.faculty.get_faculty(faculty=faculty)
-            for faculty in data
+            getters.bank.get_bank(bank=bank)
+            for bank in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
     )
 
 
 @router.get(
-    '/faculties/{faculty_id}/',
-    tags=["Клиентское приложение / Факультеты"],
+    '/cp/banks/{bank_id}/',
+    tags=["Панель Управления / Банки"],
     name="Получить пользователя по идентификатору",
-    response_model=schemas.response.SingleEntityResponse[schemas.faculty.GettingFaculty],
+    response_model=schemas.response.SingleEntityResponse[schemas.bank.GettingBank],
     responses=get_responses_description_by_codes([401, 403, 400, 404])
 )
-def get_faculty_by_id(
+@router.get(
+    '/banks/{bank_id}/',
+    tags=["Клиентское приложение / Банки"],
+    name="Получить пользователя по идентификатору",
+    response_model=schemas.response.SingleEntityResponse[schemas.bank.GettingBank],
+    responses=get_responses_description_by_codes([401, 403, 400, 404])
+)
+def get_bank_by_id(
         db: Session = Depends(deps.get_db),
-        faculty_id: int = Path(...)
+        bank_id: int = Path(...)
 ):
-    faculty = crud.crud_faculty.faculty.get(db=db, id=faculty_id)
-    if faculty is None:
+    bank = crud.crud_bank.bank.get(db=db, id=bank_id)
+    if bank is None:
         raise UnfoundEntity(message="Пользователь не найден", num=1)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.faculty.get_faculty(faculty=faculty)
+        data=getters.bank.get_bank(bank=bank)
     )
 
 
 @router.post(
-    '/cp/faculties/',
-    tags=["Панель Управления / Факультеты"],
+    '/cp/banks/',
+    tags=["Панель Управления / Банки"],
     name="создать пользователя",
-    response_model=schemas.response.SingleEntityResponse[schemas.faculty.GettingFaculty],
+    response_model=schemas.response.SingleEntityResponse[schemas.bank.GettingBank],
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def create_faculty(
-        data: schemas.faculty.CreatingFaculty,
+def create_bank(
+        data: schemas.bank.CreatingBank,
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
 ):
-    faculty = crud.crud_faculty.faculty.create(db=db, obj_in=data)
+    bank = crud.crud_bank.bank.create(db=db, obj_in=data)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.faculty.get_faculty(faculty=faculty)
+        data=getters.bank.get_bank(bank=bank)
     )
 
 
 @router.put(
-    '/cp/faculties/{faculty_id}/',
-    tags=["Панель Управления / Факультеты"],
+    '/cp/banks/{bank_id}/',
+    tags=["Панель Управления / Банки"],
     name="изменить пользователя",
-    response_model=schemas.response.SingleEntityResponse[schemas.faculty.GettingFaculty],
+    response_model=schemas.response.SingleEntityResponse[schemas.bank.GettingBank],
     responses=get_responses_description_by_codes([401, 403, 400, 404])
 )
-def edit_faculty(
-        data: schemas.faculty.UpdatingFaculty,
+def edit_bank(
+        data: schemas.bank.UpdatingBank,
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
-        faculty_id: int = Path(...),
+        bank_id: int = Path(...),
 ):
-    faculty = crud.crud_faculty.faculty.get(db=db, id=faculty_id)
-    if faculty is None:
+    bank = crud.crud_bank.bank.get(db=db, id=bank_id)
+    if bank is None:
         raise UnfoundEntity(message="Пользователь не найден", num=1)
 
-    faculty = crud.crud_faculty.faculty.update(
-        db=db, db_obj=faculty, obj_in=data)
+    bank = crud.crud_bank.bank.update(
+        db=db, db_obj=bank, obj_in=data)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.faculty.get_faculty(faculty=faculty)
+        data=getters.bank.get_bank(bank=bank)
     )
 
 
 @router.delete(
-    '/cp/faculties/{faculty_id}/',
-    tags=["Панель Управления / Факультеты"],
+    '/cp/banks/{bank_id}/',
+    tags=["Панель Управления / Банки"],
     name="удалить пользователя",
     response_model=schemas.response.OkResponse,
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def delete_faculty(
+def delete_bank(
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
-        faculty_id: int = Path(...),
+        bank_id: int = Path(...),
 ):
-    crud.crud_faculty.faculty.remove_by_id(db=db, id=faculty_id)
+    crud.crud_bank.bank.remove_by_id(db=db, id=bank_id)
 
     return schemas.response.OkResponse()

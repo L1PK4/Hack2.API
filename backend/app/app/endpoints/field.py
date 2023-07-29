@@ -13,132 +13,134 @@ router = APIRouter()
 
 
 @router.get(
-    '/faculties/',
-    tags=["Клиентское приложение / Факультеты"],
-    name="Получить всех факультеты",
-    response_model=schemas.response.ListOfEntityResponse[schemas.faculty.GettingFaculty],
+    '/fields/',
+    tags=["Клиентское приложение / Направления"],
+    name="Получить всех направления",
+    response_model=schemas.response.ListOfEntityResponse[schemas.field.GettingField],
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def get_all_faculties(
+def get_all_fields(
         db: Session = Depends(deps.get_db),
         page: int | None = Query(None)
 ):
-    data, paginator = crud.crud_faculty.faculty.get_page(
+    data, paginator = crud.crud_field.field.get_page(
         db=db, pag=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.faculty.get_faculty(faculty=faculty)
-            for faculty in data
+            getters.field.get_field(field=field)
+            for field in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
     )
 
 
 @router.get(
-    '/cp/faculties/',
-    tags=["Панель Управления / Факультеты"],
-    name="Получить всех факультеты",
-    response_model=schemas.response.ListOfEntityResponse[schemas.faculty.GettingFaculty],
+    '/cp/fields/',
+    tags=["Панель Управления / Направления"],
+    name="Получить всех направления",
+    response_model=schemas.response.ListOfEntityResponse[schemas.field.GettingField],
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def get_all_faculties(
+def get_all_fields(
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
         page: int | None = Query(None)
 ):
-    data, paginator = crud.crud_faculty.faculty.get_page(
+    data, paginator = crud.crud_field.field.get_page(
         db=db, pag=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.faculty.get_faculty(faculty=faculty)
-            for faculty in data
+            getters.field.get_field(field=field)
+            for field in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
     )
 
 
 @router.get(
-    '/faculties/{faculty_id}/',
-    tags=["Клиентское приложение / Факультеты"],
+    '/cp/fields/{field_id}/',
+    tags=["Панель Управления / Направления"],
     name="Получить пользователя по идентификатору",
-    response_model=schemas.response.SingleEntityResponse[schemas.faculty.GettingFaculty],
+    response_model=schemas.response.SingleEntityResponse[schemas.field.GettingField],
     responses=get_responses_description_by_codes([401, 403, 400, 404])
 )
-def get_faculty_by_id(
+def get_field_by_id(
         db: Session = Depends(deps.get_db),
-        faculty_id: int = Path(...)
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
+        field_id: int = Path(...)
 ):
-    faculty = crud.crud_faculty.faculty.get(db=db, id=faculty_id)
-    if faculty is None:
+    field = crud.crud_field.field.get(db=db, id=field_id)
+    if field is None:
         raise UnfoundEntity(message="Пользователь не найден", num=1)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.faculty.get_faculty(faculty=faculty)
+        data=getters.field.get_field(field=field)
     )
 
 
 @router.post(
-    '/cp/faculties/',
-    tags=["Панель Управления / Факультеты"],
+    '/cp/fields/',
+    tags=["Панель Управления / Направления"],
     name="создать пользователя",
-    response_model=schemas.response.SingleEntityResponse[schemas.faculty.GettingFaculty],
+    response_model=schemas.response.SingleEntityResponse[schemas.field.GettingField],
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def create_faculty(
-        data: schemas.faculty.CreatingFaculty,
+def create_field(
+        data: schemas.field.CreatingField,
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
 ):
-    faculty = crud.crud_faculty.faculty.create(db=db, obj_in=data)
+    field = crud.crud_field.field.create(db=db, obj_in=data)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.faculty.get_faculty(faculty=faculty)
+        data=getters.field.get_field(field=field)
     )
 
 
 @router.put(
-    '/cp/faculties/{faculty_id}/',
-    tags=["Панель Управления / Факультеты"],
+    '/cp/fields/{field_id}/',
+    tags=["Панель Управления / Направления"],
     name="изменить пользователя",
-    response_model=schemas.response.SingleEntityResponse[schemas.faculty.GettingFaculty],
+    response_model=schemas.response.SingleEntityResponse[schemas.field.GettingField],
     responses=get_responses_description_by_codes([401, 403, 400, 404])
 )
-def edit_faculty(
-        data: schemas.faculty.UpdatingFaculty,
+def edit_field(
+        data: schemas.field.UpdatingField,
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
-        faculty_id: int = Path(...),
+        field_id: int = Path(...),
 ):
-    faculty = crud.crud_faculty.faculty.get(db=db, id=faculty_id)
-    if faculty is None:
+    field = crud.crud_field.field.get(db=db, id=field_id)
+    if field is None:
         raise UnfoundEntity(message="Пользователь не найден", num=1)
 
-    faculty = crud.crud_faculty.faculty.update(
-        db=db, db_obj=faculty, obj_in=data)
+    field = crud.crud_field.field.update(
+        db=db, db_obj=field, obj_in=data)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.faculty.get_faculty(faculty=faculty)
+        data=getters.field.get_field(field=field)
     )
 
 
 @router.delete(
-    '/cp/faculties/{faculty_id}/',
-    tags=["Панель Управления / Факультеты"],
+    '/cp/fields/{field_id}/',
+    tags=["Панель Управления / Направления"],
     name="удалить пользователя",
     response_model=schemas.response.OkResponse,
     responses=get_responses_description_by_codes([401, 403, 400])
 )
-def delete_faculty(
+def delete_field(
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(
             in_auth_session(deps.get_current_active_superuser)),
-        faculty_id: int = Path(...),
+        field_id: int = Path(...),
 ):
-    crud.crud_faculty.faculty.remove_by_id(db=db, id=faculty_id)
+    crud.crud_field.field.remove_by_id(db=db, id=field_id)
 
     return schemas.response.OkResponse()

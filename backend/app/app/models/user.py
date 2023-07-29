@@ -1,10 +1,9 @@
 from typing import Any
 
-from sqlalchemy import Boolean, Column, Integer, String, DateTime
-from sqlalchemy.orm import relationship
-
 from app.models.base_model import BaseModel
 from app.utils.auth_session.models import AuthSessionMixin
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, AuthSessionMixin):
@@ -17,5 +16,10 @@ class User(BaseModel, AuthSessionMixin):
     is_superuser = Column(Boolean(), default=False)
     last_activity = Column(DateTime, nullable=True)
 
-    auth_sessions = relationship('AuthSession', back_populates='user', passive_deletes=True, cascade="all, delete-orphan")
+    auth_sessions = relationship(
+        'AuthSession', back_populates='user', passive_deletes=True, cascade="all, delete-orphan")
 
+    banks = relationship(
+        'Bank', back_populates='user',
+        passive_deletes=True, cascade="all, delete-orphan"
+    )

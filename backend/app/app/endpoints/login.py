@@ -1,19 +1,18 @@
 from datetime import timedelta
 from typing import Any
 
-from fastapi import APIRouter, Body, Depends, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
-
-from app import crud, models, schemas, deps, getters
+from app import crud, deps, getters, models, schemas
 from app.config import settings
 from app.exceptions import UnprocessableEntity
 from app.models import User
 from app.utils import security
-from app.utils.auth_session.schemas import AuthSessionInfo
 from app.utils.auth_session.deps import get_auth_session_info, in_auth_session
+from app.utils.auth_session.schemas import AuthSessionInfo
 from app.utils.logging import lprint
 from app.utils.response import get_responses_description_by_codes
+from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -80,7 +79,7 @@ def login_access_token(
 
 
 @router.post(
-    '/cp/sign-in/email-password/',
+    '/sign-in/email-password/',
     response_model=schemas.response.SingleEntityResponse[schemas.user.TokenWithUser], tags=["Вход"],
     name="Войти по email и паролю",
     responses=get_responses_description_by_codes([400, 401])
