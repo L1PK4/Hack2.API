@@ -10,3 +10,4 @@ class Bank(BaseModel):
     url = Column(String)
     user_id = Column(Integer, ForeignKey("user.id", ondelete='CASCADE'))
     user = relationship("User", back_populates="banks")
+    offers = relationship("Offer", back_populates="bank")

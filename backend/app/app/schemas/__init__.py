@@ -8,6 +8,7 @@ from .city import CreatingCity, GettingCity, UpdatingCity
 from .email_verification_code import *
 from .faculty import CreatingFaculty, GettingFaculty, UpdatingFaculty
 from .field import CreatingField, GettingField, UpdatingField
+from .offer import CreatingOffer, GettingOffer, UpdatingOffer
 from .response import (Error, ListOfEntityResponse, Meta, OkResponse,
                        Paginator, SingleEntityResponse)
 from .tel_verification_code import *
