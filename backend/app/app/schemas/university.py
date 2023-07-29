@@ -4,10 +4,14 @@ from app.schemas.city import GettingCity
 
 class BaseUniversity(BaseSchema):
     name: str | None
+    lat: str | None
+    lon: str | None
+    url: str | None
 
 
 class GettingUniversity(BaseUniversity):
     id: int
+    photo: str
     city: GettingCity
 
 
@@ -17,4 +21,3 @@ class UpdatingUniversity(BaseUniversity):
 
 class CreatingUniversity(BaseUniversity):
     city_id: int
-    

@@ -1,5 +1,6 @@
 from functools import lru_cache
 from typing import Any
+
 from app.services.storage.base_storage import BaseStorage
 from boto3.session import Session
 from botocore.client import BaseClient
@@ -25,7 +26,6 @@ class S3Storage(BaseStorage):
         self._init_client()
 
     def _init_client(self):
-        print("Called")
         self._client: BaseClient = self._session.client(
             service_name=self.service_name,
             endpoint_url=self.endpoints_url,
