@@ -1,15 +1,13 @@
 from typing import Literal
 
-from fastapi import APIRouter, Query, Depends, Path
-from sqlalchemy.orm import Session
-
-from app import crud, schemas, getters, deps, models
-from app.exceptions import UnfoundEntity
+from app import crud, deps, getters, models, schemas
+from app.exceptions import UnfoundEntity, UnprocessableEntity
 from app.utils.auth_session.deps import in_auth_session
 from app.utils.auth_session.schemas import GettingAuthSession
-from app.utils.response import get_responses_description_by_codes
-
 from app.utils.logging import lprint
+from app.utils.response import get_responses_description_by_codes
+from fastapi import APIRouter, Depends, File, Path, Query, UploadFile
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -24,9 +22,11 @@ router = APIRouter()
 def check_user(
         email: str | None = Query(None),
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser))
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser))
 ):
-    exists = crud.crud_user.user.exists(db=db, data=schemas.user.ExistsRequest(email=email))
+    exists = crud.crud_user.user.exists(
+        db=db, data=schemas.user.ExistsRequest(email=email))
 
     return schemas.response.SingleEntityResponse(
         data=exists
@@ -34,14 +34,15 @@ def check_user(
 
 
 @router.get(
-    '/cp/users/me/',
+    '/users/me/',
     tags=["Панель Управления / Профиль"],
     name="Получить текущего пользователя",
     response_model=schemas.response.SingleEntityResponse[schemas.user.GettingUser],
     responses=get_responses_description_by_codes([401, 403])
 )
 def get_user_by_id(
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_user)),
 ):
     return schemas.response.SingleEntityResponse(
         data=getters.user.get_user(user=current_user)
@@ -49,7 +50,7 @@ def get_user_by_id(
 
 
 @router.put(
-    '/cp/users/me/',
+    '/users/me/',
     tags=["Панель Управления / Профиль"],
     name="изменить текущего пользователя",
     response_model=schemas.response.SingleEntityResponse[schemas.user.GettingUser],
@@ -58,7 +59,8 @@ def get_user_by_id(
 def edit_user(
         data: schemas.user.UpdatingUser,
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser))
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_user))
 ):
     user = crud.crud_user.user.update(db=db, db_obj=current_user, obj_in=data)
 
@@ -68,7 +70,7 @@ def edit_user(
 
 
 @router.delete(
-    '/cp/users/me/',
+    '/users/me/',
     tags=["Панель Управления / Профиль"],
     name="удалить текущего пользователя",
     response_model=schemas.response.OkResponse,
@@ -76,7 +78,8 @@ def edit_user(
 )
 def edit_user(
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser))
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_user))
 ):
     crud.crud_user.user.remove_obj(db=db, obj=current_user)
     return schemas.response.OkResponse()
@@ -91,12 +94,14 @@ def edit_user(
 )
 def get_all_users(
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
         is_active: bool | None = Query(None),
         is_superuser: bool | None = Query(None),
         page: int | None = Query(None)
 ):
-    data, paginator = crud.crud_user.user.get_page(db=db, pag=page, is_active=is_active, is_superuser=is_superuser)
+    data, paginator = crud.crud_user.user.get_page(
+        db=db, page=page, is_active=is_active, is_superuser=is_superuser)
 
     return schemas.response.ListOfEntityResponse(
         data=[
@@ -116,7 +121,8 @@ def get_all_users(
 )
 def get_user_by_id(
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
         user_id: int = Path(...)
 ):
     user = crud.crud_user.user.get(db=db, id=user_id)
@@ -138,7 +144,8 @@ def get_user_by_id(
 def create_user(
         data: schemas.user.CreatingUser,
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
 ):
     user = crud.crud_user.user.create(db=db, obj_in=data)
 
@@ -157,7 +164,8 @@ def create_user(
 def edit_user(
         data: schemas.user.UpdatingUser,
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
         user_id: int = Path(...),
 ):
     user = crud.crud_user.user.get(db=db, id=user_id)
@@ -180,7 +188,8 @@ def edit_user(
 )
 def edit_user(
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
         user_id: int = Path(...),
 ):
     crud.crud_user.user.remove_by_id(db=db, id=user_id)
@@ -197,7 +206,8 @@ def edit_user(
 )
 def get_auth_session_by_user_id(
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
         user_id: int | Literal["me"] = Path(...),
         page: int | None = Query(None)
 ):
@@ -211,11 +221,13 @@ def get_auth_session_by_user_id(
     if user is None:
         raise UnfoundEntity(message="Пользователь не найден", num=1)
 
-    data, paginator = crud.auth_session.get_page(db=db, page=page, user_id=user.id, is_ended=False)
+    data, paginator = crud.auth_session.get_page(
+        db=db, page=page, user_id=user.id, is_ended=False)
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.get_auth_session(auth_session=auth_session, user=user if is_current else None)
+            getters.get_auth_session(
+                auth_session=auth_session, user=user if is_current else None)
             for auth_session in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
@@ -231,7 +243,8 @@ def get_auth_session_by_user_id(
 )
 def edit_user(
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(in_auth_session(deps.get_current_active_superuser)),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
         session_id: int = Path(...),
 ):
     crud.auth_session.remove_by_id(db=db, id=session_id)
@@ -239,10 +252,28 @@ def edit_user(
     return schemas.response.OkResponse()
 
 
-
-@router.get(
-    '/',
-    response_model=schemas.faculty.GettingFaculty,
+@router.post(
+    '/users/me/photo/',
+    tags=["Панель Управления / Профиль"],
+    name="изменить фото профиля",
+    response_model=schemas.response.SingleEntityResponse[schemas.user.GettingUser],
+    responses=get_responses_description_by_codes([401, 403, 400, 404]),
 )
-def index():
-    return schemas.response.OkResponse()
+def change_photo(
+    db: Session = Depends(deps.get_db),
+    new_photo: UploadFile | None = File(None),
+    current_user: models.User = Depends(
+        in_auth_session(deps.get_current_active_user)),
+):
+
+    result = crud.user.change_content(
+        db=db,
+        obj=current_user,
+        content=new_photo
+    )
+    if result != 0:
+        raise UnprocessableEntity("Не удалось изменить фото")
+
+    return schemas.response.SingleEntityResponse(
+        data=getters.user.get_user(user=current_user)
+    )

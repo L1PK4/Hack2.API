@@ -11,3 +11,6 @@ class Bank(BaseModel):
     user_id = Column(Integer, ForeignKey("user.id", ondelete='CASCADE'))
     user = relationship("User", back_populates="banks")
     offers = relationship("Offer", back_populates="bank")
+
+    supports = relationship("Support", back_populates="bank",
+                            cascade="all, delete-orphan")

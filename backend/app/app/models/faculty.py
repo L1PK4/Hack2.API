@@ -7,6 +7,7 @@ class Faculty(BaseModel):
     id = Column(Integer, primary_key=True, index=True)
 
     name = Column(String)
+    description = Column(String)
     university_id = Column(Integer, ForeignKey(
         'university.id', ondelete='CASCADE'), index=True, nullable=False)
 

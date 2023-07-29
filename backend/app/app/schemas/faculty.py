@@ -5,6 +5,7 @@ from app.schemas.university import GettingUniversity
 
 class BaseFaculty(BaseSchema):
     name: str | None
+    description: str | None
 
 
 class GettingFaculty(BaseFaculty):

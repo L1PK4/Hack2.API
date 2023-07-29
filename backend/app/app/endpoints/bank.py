@@ -24,7 +24,7 @@ def get_all_banks(
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_bank.bank.get_page(
-        db=db, pag=page)
+        db=db, page=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[
@@ -49,7 +49,7 @@ def get_all_banks(
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_bank.bank.get_page(
-        db=db, pag=page)
+        db=db, page=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[

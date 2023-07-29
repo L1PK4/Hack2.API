@@ -27,3 +27,9 @@ class University(BaseModel):
         'Faculty',
         back_populates='university'
     )
+
+    supports = relationship(
+        'Support',
+        back_populates='university',
+        cascade='all, delete-orphan'
+    )

@@ -1,6 +1,6 @@
-from pydantic import Field
-
 from app.schemas.base import BaseSchema
+from app.schemas.field import GettingField
+from pydantic import Field
 
 
 # Shared properties
@@ -9,7 +9,14 @@ class BaseUser(BaseSchema):
     tel: str | None = None
     is_active: bool | None = True
     is_superuser: bool = False
-    full_name: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
+    patronymic: str | None = None
+    birthdate: int | None = None
+    gender: int | None = Field(None, title="Пол", description="""Пол:  
+                               `0` - мужской;  
+                               `1` - женский.
+                               """)
 
 
 # Properties to receive via API on creation
@@ -25,6 +32,8 @@ class UpdatingUser(BaseUser):
 class GettingUser(BaseUser):
     id: int | None = None
     last_activity: int | None = None
+    avatar: str | None = None
+    fields: list[GettingField] = Field([])
 
 
 class EmailPasswordBody(BaseSchema):

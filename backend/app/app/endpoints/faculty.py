@@ -21,10 +21,13 @@ router = APIRouter()
 )
 def get_all_faculties(
         db: Session = Depends(deps.get_db),
+        city_id: int | None = Query(None),
+        cost_from: int | None = Query(None),
+        cost_to: int | None = Query(None),
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_faculty.faculty.get_page(
-        db=db, pag=page)
+        db=db, page=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[
@@ -49,7 +52,7 @@ def get_all_faculties(
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_faculty.faculty.get_page(
-        db=db, pag=page)
+        db=db, page=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[

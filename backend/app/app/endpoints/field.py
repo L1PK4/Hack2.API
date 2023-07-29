@@ -24,7 +24,7 @@ def get_all_fields(
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_field.field.get_page(
-        db=db, pag=page)
+        db=db, page=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[
@@ -32,6 +32,34 @@ def get_all_fields(
             for field in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
+    )
+
+
+@router.post(
+    '/fields/{field_id}/',
+    tags=["Клиентское приложение / Направления"],
+    name="Добавить направление в портфель",
+    response_model=schemas.response.SingleEntityResponse[schemas.field.GettingField],
+    responses=get_responses_description_by_codes([401, 403, 400])
+)
+def add_field(
+        db: Session = Depends(deps.get_db),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_user)),
+        field_id: int = Path(...),
+):
+    field = crud.field.get(db, id=field_id)
+    if field is None:
+        raise UnfoundEntity("Направление не найдено")
+
+    field = crud.field.add_field(
+        db=db,
+        field=field,
+        user=current_user
+    )
+
+    return schemas.response.SingleEntityResponse(
+        data=getters.get_field(field=field),
     )
 
 
@@ -49,7 +77,7 @@ def get_all_fields(
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_field.field.get_page(
-        db=db, pag=page)
+        db=db, page=page)
 
     return schemas.response.ListOfEntityResponse(
         data=[

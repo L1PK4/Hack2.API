@@ -12,6 +12,7 @@ class BaseOffer(BaseSchema):
 
 
 class GettingOffer(BaseOffer):
+    id: int
     bank: GettingBank
 
 

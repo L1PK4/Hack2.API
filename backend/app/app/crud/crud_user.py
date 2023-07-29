@@ -1,23 +1,35 @@
 import datetime
-from typing import Any
+from typing import Any, Type
 
+from app import deps
+from app.crud.base import CRUDBase
+from app.crud.media import MixinContent
+from app.models.user import User
 from app.schemas.base import BaseSchema
+from app.schemas.user import (CreatingUser, ExistsRequest, ExistsResponse,
+                              UpdatingUser)
+from app.utils.datetime import from_unix_timestamp
+from app.utils.security import get_password_hash, verify_password
 from sqlalchemy.orm import Session
 
-from app.crud.base import CRUDBase
-from app.models.user import User
-from app.schemas.user import CreatingUser, UpdatingUser, ExistsRequest, ExistsResponse
-from app.utils.security import get_password_hash, verify_password
 
+class CRUDUser(CRUDBase[User, CreatingUser, UpdatingUser], MixinContent):
 
-class CRUDUser(CRUDBase[User, CreatingUser, UpdatingUser]):
+    def __init__(self, model: type[User]):
+        self._storage = deps.get_storage()
+        self._content_column = 'avatar'
+        super().__init__(model)
 
     def _adapt_fields(self, obj: dict[str, Any] | BaseSchema, **kwargs) -> dict[str, Any]:
         fields = super(CRUDUser, self)._adapt_fields(obj, **kwargs)
         if 'email' in fields:
-            fields['email'] = fields['email'].lower() if isinstance(fields['email'], str) else fields['email']
+            fields['email'] = fields['email'].lower() if isinstance(
+                fields['email'], str) else fields['email']
         if 'password' in fields:
-            fields['hashed_password'] = get_password_hash(fields.pop('password'))
+            fields['hashed_password'] = get_password_hash(
+                fields.pop('password'))
+        if 'birthdate' in fields:
+            fields['birthdate'] = from_unix_timestamp(fields['birthdate'])
         return fields
 
     def create(self, db: Session, *, obj_in: CreatingUser | dict[str, Any], **kwargs) -> User:
@@ -51,8 +63,8 @@ class CRUDUser(CRUDBase[User, CreatingUser, UpdatingUser]):
     def exists(self, db: Session, *, data: ExistsRequest) -> ExistsResponse:
         return ExistsResponse(
             exists=db.query(self.model)
-                       .filter_by(**data.dict(exclude_unset=True, exclude_none=True))
-                       .first() is not None
+            .filter_by(**data.dict(exclude_unset=True, exclude_none=True))
+            .first() is not None
         )
 
     def get_by_attrs(self, db: Session, auto_create: bool = False, **attrs) -> User | None:
@@ -63,7 +75,7 @@ class CRUDUser(CRUDBase[User, CreatingUser, UpdatingUser]):
             return None
         return self._set_db_obj_fields(self.model(), attrs)
 
-    def sign_out(self, db:Session, user: User) -> None:
+    def sign_out(self, db: Session, user: User) -> None:
         if user.auth_session is not None:
             user.auth_session.ended = datetime.datetime.utcnow()
             db.add(user.auth_session)

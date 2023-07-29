@@ -15,3 +15,4 @@ class Offer(BaseModel):
     bank_id = Column(Integer, ForeignKey("bank.id", ondelete="CASCADE"))
 
     bank = relationship("Bank", back_populates="offers")
+    bids = relationship("Bid", back_populates="offer")

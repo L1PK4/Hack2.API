@@ -15,3 +15,5 @@ class Field(BaseModel):
         "faculty.id", ondelete='CASCADE'), index=True)
 
     faculty = relationship("Faculty", back_populates="fields")
+    user_fields = relationship(
+        "UserField", back_populates="field", cascade="all, delete-orphan")

@@ -4,6 +4,7 @@ from app.utils.auth_session.schemas import (CreatingAuthSession,
 
 from .bank import CreatingBank, GettingBank, UpdatingBank
 from .base import BaseSchema
+from .bid import CreatingBid, GettingBid, UpdatingBid
 from .city import CreatingCity, GettingCity, UpdatingCity
 from .email_verification_code import *
 from .faculty import CreatingFaculty, GettingFaculty, UpdatingFaculty
@@ -11,6 +12,7 @@ from .field import CreatingField, GettingField, UpdatingField
 from .offer import CreatingOffer, GettingOffer, UpdatingOffer
 from .response import (Error, ListOfEntityResponse, Meta, OkResponse,
                        Paginator, SingleEntityResponse)
+from .support import CreatingSupport, GettingSupport, UpdatingSupport
 from .tel_verification_code import *
 from .token import Token, TokenPayload
 from .university import (CreatingUniversity, GettingUniversity,
