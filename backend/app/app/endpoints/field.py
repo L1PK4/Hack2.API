@@ -21,6 +21,9 @@ router = APIRouter()
 )
 def get_all_fields(
         db: Session = Depends(deps.get_db),
+        current_user: models.User = Depends(
+            deps.get_current_active_user
+        ),
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_field.field.get_page(
@@ -28,7 +31,7 @@ def get_all_fields(
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.field.get_field(field=field)
+            getters.field.get_field(field=field, db=db, user=current_user)
             for field in data
         ],
         meta=schemas.response.Meta(paginator=paginator)

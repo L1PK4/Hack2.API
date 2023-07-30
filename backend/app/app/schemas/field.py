@@ -11,6 +11,7 @@ class BaseField(BaseSchema):
 
 class GettingField(BaseField):
     id: int
+    is_selected: bool | None
 
 
 class UpdatingField(BaseField):
