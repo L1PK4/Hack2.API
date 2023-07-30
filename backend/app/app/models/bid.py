@@ -17,6 +17,6 @@ class Bid(BaseModel):
     user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"))
     offer_id = Column(Integer, ForeignKey("offer.id", ondelete="CASCADE"))
 
-    user = relationship("User", back_populates="bids")
+    user = relationship("User", back_populates="bids", foreign_keys=[user_id])
 
     offer = relationship("Offer", back_populates="bids")

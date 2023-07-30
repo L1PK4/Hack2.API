@@ -4,6 +4,7 @@ from app.enums.bid import BidStatus
 from app.exceptions import InaccessibleEntity, UnfoundEntity
 from app.schemas.response import Meta
 from app.utils.auth_session.deps import in_auth_session
+from app.utils.logging import lprint
 from app.utils.response import get_responses_description_by_codes
 from fastapi import APIRouter, Depends, Header, Path, Query
 from sqlalchemy.orm import Session
@@ -113,25 +114,27 @@ def approve_bid(
         db=db,
         id=bid_id
     )
-    if bid.bank.user_id != current_user.id:
+    if bid.offer.bank.user_id != current_user.id:
         raise InaccessibleEntity("Заявка недоступна")
     if bid is None:
         raise UnfoundEntity("Заявка не найдена")
 
+    lprint(data.is_accepted)
     if not data.is_accepted:
         bid = crud.bid.decline(
             db=db,
-            bank=bid.bank,
+            bank=bid.offer.bank,
             bid=bid,
             verification_sert=verification_sert
         )
-    bid = crud.bid.accept(
-        db=db,
-        bank=bid.bank,
-        bid=bid,
-        approval=data.approval,
-        verification_sert=verification_sert
-    )
+    else:
+        bid = crud.bid.accept(
+            db=db,
+            bank=bid.offer.bank,
+            bid=bid,
+            approval=data.approval,
+            verification_sert=verification_sert
+        )
 
     return schemas.response.SingleEntityResponse(
         data=schemas.bid.BidApprovalResponse(
@@ -165,7 +168,7 @@ def get_bids_by_bank(
     )
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.bid.get_bid(datum)
+            getters.bid.get_bid_by_bank(datum)
             for datum
             in data
         ],

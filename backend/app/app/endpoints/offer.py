@@ -21,6 +21,8 @@ router = APIRouter()
 )
 def get_all_offers(
         db: Session = Depends(deps.get_db),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_user)),
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_offer.offer.get_page(
@@ -28,7 +30,7 @@ def get_all_offers(
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.offer.get_offer(offer=offer)
+            getters.offer.get_offer(offer=offer, user=current_user, db=db)
             for offer in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
@@ -69,6 +71,8 @@ def get_all_offers(
 )
 def get_offer_by_id(
         db: Session = Depends(deps.get_db),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_user)),
         offer_id: int = Path(...)
 ):
     offer = crud.crud_offer.offer.get(db=db, id=offer_id)
@@ -76,7 +80,7 @@ def get_offer_by_id(
         raise UnfoundEntity(message="Пользователь не найден", num=1)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.offer.get_offer(offer=offer)
+        data=getters.offer.get_offer(offer=offer, user=current_user, db=db)
     )
 
 

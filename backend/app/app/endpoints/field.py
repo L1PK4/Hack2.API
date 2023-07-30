@@ -62,7 +62,7 @@ def add_field(
     )
 
     return schemas.response.SingleEntityResponse(
-        data=getters.get_field(field=field),
+        data=getters.get_field(field=field, db=db, user=current_user),
     )
 
 

@@ -21,6 +21,8 @@ router = APIRouter()
 )
 def get_all_faculties(
         db: Session = Depends(deps.get_db),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_user)),
         city_id: int | None = Query(None),
         cost_from: int | None = Query(None),
         cost_to: int | None = Query(None),
@@ -35,7 +37,8 @@ def get_all_faculties(
 
     return schemas.response.ListOfEntityResponse(
         data=[
-            getters.faculty.get_faculty(faculty=faculty)
+            getters.faculty.get_faculty(
+                faculty=faculty, db=db, user=current_user)
             for faculty in data
         ],
         meta=schemas.response.Meta(paginator=paginator)
@@ -76,6 +79,8 @@ def get_all_faculties(
 )
 def get_faculty_by_id(
         db: Session = Depends(deps.get_db),
+        current_user: models.User = Depends(
+            in_auth_session(deps.get_current_active_superuser)),
         faculty_id: int = Path(...)
 ):
     faculty = crud.crud_faculty.faculty.get(db=db, id=faculty_id)
@@ -83,7 +88,8 @@ def get_faculty_by_id(
         raise UnfoundEntity(message="Пользователь не найден", num=1)
 
     return schemas.response.SingleEntityResponse(
-        data=getters.faculty.get_faculty(faculty=faculty)
+        data=getters.faculty.get_faculty(
+            faculty=faculty, db=db, user=current_user)
     )
 
 

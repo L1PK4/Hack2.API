@@ -1,5 +1,6 @@
 from app.schemas.bank import GettingBank
 from app.schemas.base import BaseSchema
+from pydantic import Field
 
 
 class BaseOffer(BaseSchema):
@@ -13,12 +14,13 @@ class BaseOffer(BaseSchema):
 
 class GettingOffer(BaseOffer):
     id: int
+    is_sent: bool | None = Field(None)
     bank: GettingBank
 
 
 class UpdatingOffer(BaseOffer):
-    pass
+    bank_id: int | None
 
 
 class CreatingOffer(BaseOffer):
-    pass
+    bank_id: int

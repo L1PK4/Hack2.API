@@ -7,6 +7,7 @@ from .city import get_city
 from .email_verification_code import get_email_verification_code
 from .faculty import get_faculty
 from .field import get_field
+from .offer import get_offer
 from .support import get_support
 from .tel_verification_code import get_tel_verification_code
 from .university import get_university
