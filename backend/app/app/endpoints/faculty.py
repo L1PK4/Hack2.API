@@ -27,7 +27,11 @@ def get_all_faculties(
         page: int | None = Query(None)
 ):
     data, paginator = crud.crud_faculty.faculty.get_page(
-        db=db, page=page)
+        db=db,
+        page=page,
+        cost_range=[cost_from, cost_to],
+        city_id=city_id
+    )
 
     return schemas.response.ListOfEntityResponse(
         data=[
